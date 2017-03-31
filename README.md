@@ -1,4 +1,7 @@
-# Bremon
+# bremon
+Energie monitoring app, for school project IOT206-2017 Avans Hogeschool.
+
+Authors: Bart van Reedijk and Remco Vorthoren, students Avans Hogeschool, Breda
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.0-beta.32.3.
 
