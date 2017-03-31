@@ -14,6 +14,7 @@
 
 # IDEs and editors
 /.idea
+>>>>>>> d16b26e027357e1f10a43b1c610a9bf8e6b48001
 
 # misc
 /.sass-cache
@@ -30,6 +31,9 @@ testem.log
 
 #System Files
 .DS_Store
+<<<<<<< HEAD
+Thumbs.db
+=======
 
 ### Git ###
 *.orig
@@ -39,7 +43,6 @@ testem.log
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
 
 # User-specific stuff:
-.idea/**/workspace.xml
 .idea/**/tasks.xml
 .idea/dictionaries
 
@@ -96,7 +99,6 @@ fabric.properties
 ### Node ###
 # Logs
 logs
-*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
