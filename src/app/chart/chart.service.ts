@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs/Rx';
-import {Http, Headers} from '@angular/http';
+import {Http} from '@angular/http';
+
+import Data from './chart_data/data';
+import {Grey} from './chart_data/line-color';
+import Line from './chart_data/line';
 
 @Injectable()
 export class ChartService {
@@ -9,7 +13,7 @@ export class ChartService {
 
   constructor(private http: Http) { }
 
-  public getData(): Observable<Object> {
+  public getData(): Observable<Array<Object>> {
 
     const body = JSON.stringify({
         'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOjIsImV4cCI6IjIwMTctMDQtMTVUMDc6NDU6MDMuOTM2WiJ9.J0I05BzFbn4jvAK1jIMCkkXFmju-Wm9-HfQBtp25rcI',
@@ -24,7 +28,7 @@ export class ChartService {
       .catch(this.handleError);
   }
 
-  public getDataByUser(): Observable<Object>{
+  public getDataByUser(): Observable<Array<Object>> {
     const url = 'http://localhost:5000/measurements/user/2';
     const body = JSON.stringify({
       'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOjIsImV4cCI6IjIwMTctMDQtMTVUMDc6NDU6MDMuOTM2WiJ9.J0I05BzFbn4jvAK1jIMCkkXFmju-Wm9-HfQBtp25rcI'
@@ -49,5 +53,24 @@ export class ChartService {
     }
     console.error(errMsg);
     return Observable.throw(errMsg);
+  }
+
+  public buildLine(measurements: Array<Object>): Line {
+    console.log(measurements, typeof measurements);
+
+    const newLine = new Line();
+    newLine.dataSet = {
+      data: [],
+      legend_label: 'Dataset 1'
+    };
+    newLine.color = Grey;
+    measurements.forEach(measurement => {
+      const newData = new Data();
+      newData.data = measurement['value'];
+      newData.label = measurement['timestamp'];
+      console.log(newData);
+      newLine.dataSet.data.push(newData);
+    });
+    return newLine;
   }
 }

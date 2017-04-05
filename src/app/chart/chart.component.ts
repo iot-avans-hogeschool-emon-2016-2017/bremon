@@ -1,5 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild  } from '@angular/core';
+import { BaseChartDirective } from 'ng2-charts/ng2-charts';
+
 import {ChartService} from './chart.service';
+import Line from './chart_data/line';
+import {Red} from './chart_data/line-color';
 
 @Component({
   selector: 'app-chart',
@@ -7,6 +11,7 @@ import {ChartService} from './chart.service';
   styleUrls: ['./chart.component.css']
 })
 export class ChartComponent implements OnInit {
+  @ViewChild(BaseChartDirective) chart: BaseChartDirective;
 
   public lineChartData: Array<any> = [
     {
@@ -40,29 +45,71 @@ export class ChartComponent implements OnInit {
 
   // events
   public chartClicked(e: any): void {
-    console.log(e);
+    console.log('click', e);
   }
 
   public chartHovered(e: any): void {
-    console.log(e);
+    console.log('hoverd', e);
   }
+
+  timeuser: Boolean = false;
 
   constructor(private chart_service: ChartService) { }
 
-  ngOnInit() {
-    this.chart_service.getData().subscribe(data => {
-      console.log(data);
-    },
-    err => {
-      console.log(err);
-    });
+  ngOnInit() { }
 
-    this.chart_service.getDataByUser().subscribe(data => {
+  public clickButton(): void {
+    if (this.timeuser) {this.byDefaultTime();
+    } else {this.byUser();
+    }
+    this.timeuser = !this.timeuser;
+  }
+
+  public byDefaultTime(): void {
+    this.chart_service.getData().subscribe(data => {
         console.log(data);
+        const line = this.chart_service.buildLine(data);
+        this.showLine(line);
+        console.log(line);
       },
       err => {
         console.log(err);
       });
   }
 
+  public byUser(): void {
+    this.chart_service.getDataByUser().subscribe(data => {
+        console.log(data);
+        const line = this.chart_service.buildLine(data);
+        line.color = Red;
+        this.showLine(line);
+        console.log(line);
+      },
+      err => {
+        console.log(err);
+      });
+  }
+
+  private showLine(line: Line): void {
+    const chartData = {
+      data: [],
+      label: line.dataSet.legend_label
+    };
+    const chartLabels = [];
+    const chartColors = [line.color];
+    line.dataSet.data.forEach(data => {
+      chartData.data.push(data.data);
+      chartLabels.push(data.label);
+    });
+
+    console.log(chartData, chartLabels, chartColors);
+    this.lineChartData = [chartData];
+    this.lineChartLabels = chartLabels;
+    this.lineChartColors = chartColors;
+
+    this.chart.chart.config.data.labels = this.lineChartLabels;
+    this.chart.chart.config.data.datasets = this.lineChartData;
+    this.chart.chart.config.data.colors = this.lineChartColors;
+    this.chart.chart.update();
+  }
 }
