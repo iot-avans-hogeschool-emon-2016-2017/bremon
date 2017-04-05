@@ -8,6 +8,8 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { AppComponent } from './app.component';
 import { ChartComponent } from './chart/chart.component';
 
+import { ChartService } from './chart/chart.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -19,7 +21,9 @@ import { ChartComponent } from './chart/chart.component';
     HttpModule,
     ChartsModule
   ],
-  providers: [],
+  providers: [
+    ChartService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

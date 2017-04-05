@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {ChartService} from './chart.service';
 
 @Component({
   selector: 'app-chart',
@@ -46,9 +47,15 @@ export class ChartComponent implements OnInit {
     console.log(e);
   }
 
-  constructor() { }
+  constructor(private chart_service: ChartService) { }
 
   ngOnInit() {
+    this.chart_service.getData().subscribe(data => {
+      console.log(data);
+    },
+    err => {
+      console.log(err);
+    });
   }
 
 }
