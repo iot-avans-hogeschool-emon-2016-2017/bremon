@@ -24,6 +24,19 @@ export class ChartService {
       .catch(this.handleError);
   }
 
+  public getDataByUser(): Observable<Object>{
+    const url = 'http://localhost:5000/measurements/user/2';
+    const body = JSON.stringify({
+      'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOjIsImV4cCI6IjIwMTctMDQtMTVUMDc6NDU6MDMuOTM2WiJ9.J0I05BzFbn4jvAK1jIMCkkXFmju-Wm9-HfQBtp25rcI'
+    });
+
+    return this.http.post(url, body)
+      .map(res => {
+        return res.json().data || {};
+      })
+      .catch(this.handleError);
+  }
+
   private handleError (error: Response | any) {
     // In a real world app, you might use a remote logging infrastructure
     let errMsg: string;

@@ -56,6 +56,13 @@ export class ChartComponent implements OnInit {
     err => {
       console.log(err);
     });
+
+    this.chart_service.getDataByUser().subscribe(data => {
+        console.log(data);
+      },
+      err => {
+        console.log(err);
+      });
   }
 
 }
