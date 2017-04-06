@@ -13,12 +13,12 @@ export class ChartService {
 
   constructor(private http: Http) { }
 
-  public getData(): Observable<Array<Object>> {
+  public getData(begin, end): Observable<Array<Object>> {
 
     const body = JSON.stringify({
         'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOjIsImV4cCI6IjIwMTctMDQtMTVUMDc6NDU6MDMuOTM2WiJ9.J0I05BzFbn4jvAK1jIMCkkXFmju-Wm9-HfQBtp25rcI',
-        'begin': '2017-03-22 11:00:00',
-        'end':   '2017-03-22 11:15:00'
+        'begin': begin,
+        'end':   end
     });
 
     return this.http.post(this.url, body)
@@ -56,8 +56,6 @@ export class ChartService {
   }
 
   public buildLine(measurements: Array<Object>): Line {
-    console.log(measurements, typeof measurements);
-
     const newLine = new Line();
     newLine.dataSet = {
       data: [],
@@ -68,7 +66,6 @@ export class ChartService {
       const newData = new Data();
       newData.data = measurement['value'];
       newData.label = measurement['timestamp'];
-      console.log(newData);
       newLine.dataSet.data.push(newData);
     });
     return newLine;
