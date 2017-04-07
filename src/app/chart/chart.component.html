@@ -9,12 +9,9 @@
           [options]="lineChartOptions"
           [colors]="lineChartColors"
           [legend]="lineChartLegend"
-          [chartType]="lineChartType"
-          (chartHover)="chartHovered($event)"
-          (chartClick)="chartClicked($event)"></canvas>
+          [chartType]="lineChartType">
+  </canvas>
 </div>
 
-<input type="button" (click)="byUser()" value="By user 2">
-<input type="button" (click)="byDefaultTime()" value="By default time">
 <input type="button" (click)="byHoursInterval()" value="By hours interval">
 

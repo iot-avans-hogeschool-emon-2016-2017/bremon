@@ -1,6 +1,8 @@
-import Data from './data';
-
 export default class DataSet {
-  data: Array<Data>;
-  legend_label: string;
+  data: Array<any>;
+  label: string;
+
+  constructor() {
+    this.data = [];
+  }
 }

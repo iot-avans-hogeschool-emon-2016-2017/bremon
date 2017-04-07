@@ -2,14 +2,14 @@ import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs/Rx';
 import {Http} from '@angular/http';
 
-import Data from './chart_data/data';
-import {Grey} from './chart_data/line-color';
+import Chart from './chart_data/chart';
 import Line from './chart_data/line';
+import {Red} from './chart_data/line-color';
 
 @Injectable()
 export class ChartService {
 
-  private url: string = 'http://localhost:5000/measurements/time';
+  private url: string = 'http://localhost:5000/measurements/time/hour';
 
   constructor(private http: Http) { }
 
@@ -22,19 +22,6 @@ export class ChartService {
     });
 
     return this.http.post(this.url, body)
-      .map(res => {
-        return res.json().data || {};
-      })
-      .catch(this.handleError);
-  }
-
-  public getDataByUser(): Observable<Array<Object>> {
-    const url = 'http://localhost:5000/measurements/user/2';
-    const body = JSON.stringify({
-      'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOjIsImV4cCI6IjIwMTctMDQtMTVUMDc6NDU6MDMuOTM2WiJ9.J0I05BzFbn4jvAK1jIMCkkXFmju-Wm9-HfQBtp25rcI'
-    });
-
-    return this.http.post(url, body)
       .map(res => {
         return res.json().data || {};
       })
@@ -55,19 +42,26 @@ export class ChartService {
     return Observable.throw(errMsg);
   }
 
-  public buildLine(measurements: Array<Object>): Line {
-    const newLine = new Line();
-    newLine.dataSet = {
-      data: [],
-      legend_label: 'Dataset 1'
-    };
-    newLine.color = Grey;
-    measurements.forEach(measurement => {
-      const newData = new Data();
-      newData.data = measurement['value'];
-      newData.label = measurement['timestamp'];
-      newLine.dataSet.data.push(newData);
+  public buildChartByTimeInterval(measurements: Array<Object>): Chart {
+    const newChart = new Chart();
+    if (measurements.length <= 0) { return newChart; }
+    const line = new Line();
+    line.color = Red;
+    line.dataSet.label = 'Total value per Hour';
+    Object.keys(measurements).forEach(key => {
+      newChart.labels.push(key);
+      line.dataSet.data.push(this.countValues(measurements[key]));
     });
-    return newLine;
+
+    newChart.lines.push(line);
+    return newChart;
+  }
+
+  private countValues(measurements): number {
+    let total = 0;
+    Object.keys(measurements).forEach(key => {
+      total += measurements[key].value;
+    });
+    return total ;
   }
 }
