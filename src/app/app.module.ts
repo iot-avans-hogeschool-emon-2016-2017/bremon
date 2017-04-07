@@ -9,6 +9,7 @@ import {MaterialModule} from '@angular/material';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
+import {LoginService} from "./login/login.service";
 
 @NgModule({
   declarations: [
@@ -21,7 +22,9 @@ import { LoginComponent } from './login/login.component';
     HttpModule,
     MaterialModule,
   ],
-  providers: [],
+  providers: [
+    LoginService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

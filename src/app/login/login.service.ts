@@ -3,39 +3,27 @@
  */
 import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs/Rx';
-import {Http} from '@angular/http';
+import {Headers, RequestOptions, Http, Response} from '@angular/http';
 
 @Injectable()
 export class LoginService {
 
-  private url: string = 'http://localhost:5000/measurements/time';
+  private url: string = 'https://emonapi.brdk.nl/login';
 
   constructor(private http: Http) { }
 
-  public getData(begin, end): Observable<Array<Object>> {
+  public getToken(username, password): Observable<Array<Object>> {
+    var headers = new Headers({ 'Content-Type': 'application/json' });
+    var options = new RequestOptions({ headers: headers });
 
-    const body = JSON.stringify({
-      'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOjIsImV4cCI6IjIwMTctMDQtMTVUMDc6NDU6MDMuOTM2WiJ9.J0I05BzFbn4jvAK1jIMCkkXFmju-Wm9-HfQBtp25rcI',
-      'begin': begin,
-      'end':   end
-    });
+    const body = {
+      'username': username,
+      'password': password
+    }
 
-    return this.http.post(this.url, body)
+    return this.http.post(this.url, body, options)
       .map(res => {
-        return res.json().data || {};
-      })
-      .catch(this.handleError);
-  }
-
-  public getDataByUser(): Observable<Array<Object>> {
-    const url = 'http://localhost:5000/measurements/user/2';
-    const body = JSON.stringify({
-      'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOjIsImV4cCI6IjIwMTctMDQtMTVUMDc6NDU6MDMuOTM2WiJ9.J0I05BzFbn4jvAK1jIMCkkXFmju-Wm9-HfQBtp25rcI'
-    });
-
-    return this.http.post(url, body)
-      .map(res => {
-        return res.json().data || {};
+        return res.json().token || {};
       })
       .catch(this.handleError);
   }
