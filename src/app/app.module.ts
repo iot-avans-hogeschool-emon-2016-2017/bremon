@@ -8,16 +8,19 @@ import 'hammerjs';
 import {MaterialModule} from '@angular/material';
 
 import { AppComponent } from './app.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
-    MaterialModule
+    MaterialModule,
+    LoginModule
   ],
   providers: [],
   bootstrap: [AppComponent]
