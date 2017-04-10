@@ -20,24 +20,29 @@ export class DayComponent implements OnInit {
   protected endTime;
   protected chart: Chart;
 
-  constructor(private measurement_service: MeasurementService) {
-    this.endTime = moment();
-    this.beginTime = moment()
-        .subtract(1, 'days');
-  }
+  constructor(private measurement_service: MeasurementService) {  }
 
   ngOnInit() {
+    this.getLast24HoursChart();
+  }
+
+  getLast24HoursChart() {
+    this.setTimeLast24Hours();
     this.measurement_service.getMeasurements(
       this.beginTime.format(momentFormatString),
       this.endTime.format(momentFormatString)
     ).subscribe(data => {
-      console.log(data);
-      this.chart = this.buildChart(data);
-      console.log('new chart', this.chart);
-    },
-    err => {
-      console.error(err);
-    });
+        this.chart = this.buildChart(data);
+      },
+      err => {
+        console.error(err);
+      });
+  }
+
+  setTimeLast24Hours(): void {
+    this.endTime = moment();
+    this.beginTime = moment()
+      .subtract(2, 'days');
   }
 
   buildChart(data: Array<Object>): Chart {

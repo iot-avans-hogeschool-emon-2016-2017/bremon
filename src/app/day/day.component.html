@@ -2,6 +2,16 @@
   Show energy consumption of 1 day
 </p>
 
+<div style="float: right">
+  <input
+    type="button"
+    name="Refresh"
+    value="Refresh"
+    (click)="getLast24HoursChart()"
+  />
+</div>
+
+
 <div style="width: 60%">
   <app-chart [chart]="chart" *ngIf="chart"></app-chart>
 </div>
