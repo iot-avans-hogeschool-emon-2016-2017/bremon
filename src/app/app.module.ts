@@ -10,21 +10,25 @@ import {MaterialModule} from '@angular/material';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 
-import { AppRoutingModule } from './app-routing.module';
+import {routing, routingProviders} from "./app.routing";
+import {AppManagerComponent} from "./app-manager.component";
+
+import {AuthService} from "./auth.service"
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    AppManagerComponent
   ],
   imports: [
+    routing,
     BrowserModule,
     FormsModule,
     HttpModule,
-    MaterialModule,
-    AppRoutingModule
+    MaterialModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [routingProviders, AuthService],
+  bootstrap: [AppComponent, AppManagerComponent]
 })
 export class AppModule { }
