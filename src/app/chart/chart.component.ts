@@ -9,7 +9,6 @@ import {
 import { BaseChartDirective } from 'ng2-charts/ng2-charts';
 
 import Chart from './chart_data/chart';
-import {Grey} from './chart_data/line-color';
 
 @Component({
   selector: 'app-chart',
@@ -29,7 +28,7 @@ export class ChartComponent implements OnInit, OnChanges {
   public lineChartType: String;
 
 
-  @ViewChild(BaseChartDirective) chartComponent: BaseChartDirective;
+  @ViewChild(BaseChartDirective) chart_canvas: BaseChartDirective;
   @Input() chart: Chart;
 
   constructor() { }
@@ -59,9 +58,14 @@ export class ChartComponent implements OnInit, OnChanges {
     this.lineChartLegend = this.chart.showLegend;
     this.lineChartType = this.chart.type;
 
-    if (this.chartComponent.chart) {
-      this.chartComponent.chart.config.data.labels = this.chart.labels;
-      this.chartComponent.chart.update();
+    if (this.chart_canvas.chart) {
+      this.chart_canvas.chart.config.data.datasets = dataSets;
+      this.chart_canvas.chart.config.data.colors = colors;
+      this.chart_canvas.chart.config.data.labels = this.chart.labels;
+      this.chart_canvas.chart.config.data.options = this.chart.options;
+      this.chart_canvas.chart.config.data.legend = this.chart.showLegend;
+      this.chart_canvas.chart.config.data.chartType = this.chart.type;
+      this.chart_canvas.chart.update();
     }
   }
 }
