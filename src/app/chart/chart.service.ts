@@ -47,7 +47,7 @@ export class ChartService {
     const newChart = new Chart();
     if (data.length <= 0) { return newChart; }
     const line = new Line();
-    line.dataSet.label = 'Total value per Hour';
+    line.dataSet.label = 'kWh';
     line.color = Grey;
     Object.keys(data).forEach(yearK => {
       const year = data[yearK];

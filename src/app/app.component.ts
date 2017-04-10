@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-
+import * as moment from 'moment';
 import {ChartService} from './chart/chart.service';
 import Chart from './chart/chart_data/chart';
 
@@ -10,20 +10,23 @@ import Chart from './chart/chart_data/chart';
 })
 export class AppComponent {
   title = 'app works!';
-  public beginTime: string;
-  public endTime: string;
+  public difInHours: number;
   public chart: Chart;
 
   constructor(private chart_service: ChartService) {
-    this.beginTime = '2017-04-05 08:00:00';
-    this.endTime = '2017-04-06 08:00:00';
+    this.difInHours = 0;
   }
 
   public byHoursInterval(): void {
-    console.log(this.beginTime, this.endTime);
+    const endTime = moment();
+    const beginTime = moment();
+
     this.chart_service.getData(
-      this.beginTime,
-      this.endTime
+      beginTime
+        .subtract(this.difInHours, 'hour')
+        .format('YYYY-MM-DD HH:mm:ss'),
+      endTime
+        .format('YYYY-MM-DD HH:mm:ss')
     ).subscribe(data => {
         this.chart = this.chart_service.buildChartByTimeInterval(data);
       },
