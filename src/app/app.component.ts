@@ -1,4 +1,5 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
+import {AuthService} from "./auth.service";
 
 @Component({
   selector: 'app-root',
@@ -7,7 +8,7 @@ import {Component, ElementRef, ViewChild} from '@angular/core';
 })
 export class AppComponent {
 
-  constructor() {
+  constructor(private authService: AuthService) {
   }
 
 }

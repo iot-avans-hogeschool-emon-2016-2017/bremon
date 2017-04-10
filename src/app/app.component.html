@@ -1,2 +1,2 @@
-<app-login></app-login>
-<app-manager></app-manager>
+<app-manager *ngIf="authService.isAuthenticated()"></app-manager>
+<app-login *ngIf="!authService.isAuthenticated()"></app-login>
