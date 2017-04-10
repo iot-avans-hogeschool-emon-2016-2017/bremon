@@ -7,13 +7,15 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
 
 import { AppComponent } from './app.component';
 import { ChartComponent } from './chart/chart.component';
+import { DayComponent } from './day/day.component';
 
-import { ChartService } from './chart/chart.service';
+import { MeasurementService} from './measurement.service';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ChartComponent
+    ChartComponent,
+    DayComponent
   ],
   imports: [
     BrowserModule,
@@ -22,7 +24,7 @@ import { ChartService } from './chart/chart.service';
     ChartsModule
   ],
   providers: [
-    ChartService
+    MeasurementService
   ],
   bootstrap: [AppComponent]
 })
