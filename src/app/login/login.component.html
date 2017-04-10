@@ -1,0 +1,27 @@
+<div class="container">
+  <form>
+    <div class="header">
+      <h1>Bremon</h1>
+    </div>
+
+    <md-input-container class="group">
+      <input mdInput placeholder="Username" type="text" #username>
+    </md-input-container>
+    <!--<input type="text" #username><span class="highlight"></span><span class="bar"></span>
+    <label>Username</label>-->
+    <md-input-container class="group">
+      <input mdInput placeholder="Password" type="password" #password>
+    </md-input-container>
+    <!--<input type="password" #password><span class="highlight"></span><span class="bar"></span>
+    <label>Password</label>-->
+
+    <button type="button" class="button buttonBlue" (click)="onClick_login(username, password)">Login
+      <div class="ripples buttonRipples"><span class="ripplesCircle"></span></div>
+    </button>
+  </form>
+  <div class="footer">
+    <p>Powered by: Remco Vorthoren & Bart Reedijk</p>
+  </div>
+</div>
+
+
