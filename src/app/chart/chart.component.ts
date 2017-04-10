@@ -37,14 +37,20 @@ export class ChartComponent implements OnInit {
   public lineChartLegend: Boolean = true;
   public lineChartType: String = 'line';
 
-  constructor(private chart_service: ChartService) { }
+  public beginTime: string;
+  public endTime: string;
+
+  constructor(private chart_service: ChartService) {
+    this.beginTime = '2017-04-05 08:00:00';
+    this.endTime = '2017-04-06 08:00:00';
+  }
 
   ngOnInit() { }
 
   public byHoursInterval(): void {
     this.chart_service.getData(
-      '2017-04-06 03:00:00',
-      '2017-04-06 08:10:00'
+      this.beginTime,
+      this.endTime
     ).subscribe(data => {
         const chart = this.chart_service.buildChartByTimeInterval(data);
         this.showChart(chart);
@@ -69,7 +75,6 @@ export class ChartComponent implements OnInit {
     this.chart.chart.config.data.options = chart.options;
     this.chart.chart.config.data.legend = chart.showLegend;
     this.chart.chart.config.data.chartType = chart.type;
-
     this.chart.chart.update();
   }
 }

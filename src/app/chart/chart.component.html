@@ -1,7 +1,3 @@
-<p>
-  chart works!
-</p>
-<span>Grafiek</span>
 <div style="display: block; width: 100%;">
   <canvas baseChart width="400px" height="400px"
           [datasets]="lineChartData"
@@ -13,5 +9,7 @@
   </canvas>
 </div>
 
-<input type="button" (click)="byHoursInterval()" value="By hours interval">
+<input type="text" [(ngModel)]="beginTime" title="Begin tijd"/>
+<input type="text" [(ngModel)]="endTime" title="Eind tijd"/>
+<input type="button" (click)="byHoursInterval()" value="Show">
 

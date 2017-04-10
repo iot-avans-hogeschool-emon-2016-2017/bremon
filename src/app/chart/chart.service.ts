@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs/Rx';
 import {Http} from '@angular/http';
 
+import * as moment from 'moment';
+
 import Chart from './chart_data/chart';
 import Line from './chart_data/line';
-import {Red} from './chart_data/line-color';
 
 @Injectable()
 export class ChartService {
@@ -29,7 +30,6 @@ export class ChartService {
   }
 
   private handleError (error: Response | any) {
-    // In a real world app, you might use a remote logging infrastructure
     let errMsg: string;
     if (error instanceof Response) {
       const body = error.json() || '';
@@ -42,17 +42,34 @@ export class ChartService {
     return Observable.throw(errMsg);
   }
 
-  public buildChartByTimeInterval(measurements: Array<Object>): Chart {
+  public buildChartByTimeInterval(data: Array<Object>): Chart {
     const newChart = new Chart();
-    if (measurements.length <= 0) { return newChart; }
+    if (data.length <= 0) { return newChart; }
     const line = new Line();
-    line.color = Red;
     line.dataSet.label = 'Total value per Hour';
-    Object.keys(measurements).forEach(key => {
-      newChart.labels.push(key);
-      line.dataSet.data.push(this.countValues(measurements[key]));
-    });
 
+    Object.keys(data).forEach(yearK => {
+      const year = data[yearK];
+
+      Object.keys(year).forEach(monthK => {
+        const month = year[monthK];
+
+        Object.keys(month).forEach(dayK => {
+          const day = month[dayK];
+
+          Object.keys(day).forEach(hourK => {
+            const measurements = day[hourK];
+            /*hourK === 0 means a new day, show date new day instead of zero*/
+            if (hourK !== '0') {
+              newChart.labels.push(hourK);
+            } else {
+              newChart.labels.push(moment(measurements[hourK]['timestamp']).format('YYYY-MM-DD'));
+            }
+            line.dataSet.data.push(this.countValues(measurements));
+          });
+        });
+      });
+    });
     newChart.lines.push(line);
     return newChart;
   }
