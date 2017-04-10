@@ -6,6 +6,7 @@ import * as moment from 'moment';
 
 import Chart from './chart_data/chart';
 import Line from './chart_data/line';
+import {Grey} from './chart_data/line-color';
 
 @Injectable()
 export class ChartService {
@@ -47,7 +48,7 @@ export class ChartService {
     if (data.length <= 0) { return newChart; }
     const line = new Line();
     line.dataSet.label = 'Total value per Hour';
-
+    line.color = Grey;
     Object.keys(data).forEach(yearK => {
       const year = data[yearK];
 

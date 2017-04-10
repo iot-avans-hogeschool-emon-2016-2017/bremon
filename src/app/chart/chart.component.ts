@@ -1,8 +1,13 @@
-import { Component, OnInit, ViewChild  } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  Input,
+  OnChanges,
+  SimpleChanges
+} from '@angular/core';
 import { BaseChartDirective } from 'ng2-charts/ng2-charts';
 
-
-import {ChartService} from './chart.service';
 import Chart from './chart_data/chart';
 import {Grey} from './chart_data/line-color';
 
@@ -11,70 +16,52 @@ import {Grey} from './chart_data/line-color';
   templateUrl: './chart.component.html',
   styleUrls: ['./chart.component.css']
 })
-export class ChartComponent implements OnInit {
-  @ViewChild(BaseChartDirective) chart: BaseChartDirective;
+export class ChartComponent implements OnInit, OnChanges {
+  public lineChartData: Array<any> = [ ];
 
-  public lineChartData: Array<any> = [
-    {
-      data:
-      [133, 114, 92, 428, 626, 633, 633, 642, 629, 632, 628],
-      label: 'Default'
-    }
-  ];
+  public lineChartLabels: Array<any> = [ ];
 
-  public lineChartLabels: Array<any> = [
-    '13:30', ' ', ' ', '13:33', ' ', ' ', '13:36', ' ', ' ', '13:39'
-  ];
+  public lineChartOptions: any = { };
 
-  public lineChartOptions: any = {
-    responsive: true
-  };
+  public lineChartColors: Array<any> = [];
 
-  public lineChartColors: Array<any> = [
-    Grey
-  ];
+  public lineChartLegend: Boolean;
+  public lineChartType: String;
 
-  public lineChartLegend: Boolean = true;
-  public lineChartType: String = 'line';
 
-  public beginTime: string;
-  public endTime: string;
+  @ViewChild(BaseChartDirective) chartComponent: BaseChartDirective;
+  @Input() chart: Chart;
 
-  constructor(private chart_service: ChartService) {
-    this.beginTime = '2017-04-05 08:00:00';
-    this.endTime = '2017-04-06 08:00:00';
+  constructor() { }
+
+  ngOnInit() {
+    this.showChart();
   }
 
-  ngOnInit() { }
-
-  public byHoursInterval(): void {
-    this.chart_service.getData(
-      this.beginTime,
-      this.endTime
-    ).subscribe(data => {
-        const chart = this.chart_service.buildChartByTimeInterval(data);
-        this.showChart(chart);
-      },
-      err => {
-        console.log(err);
-      });
+  ngOnChanges(changes: SimpleChanges) {
+    this.showChart();
   }
 
-  private showChart(chart: Chart): void {
+  private showChart(): void {
+    if (!this.chart) { return; }
     const dataSets = [];
     const colors = [];
 
-    chart.lines.forEach(line => {
+    this.chart.lines.forEach(line => {
       dataSets.push(line.dataSet);
       colors.push(line.color);
     });
 
-    this.chart.chart.config.data.datasets = dataSets;
-    this.chart.chart.config.data.colors = colors;
-    this.chart.chart.config.data.labels = chart.labels;
-    this.chart.chart.config.data.options = chart.options;
-    this.chart.chart.config.data.legend = chart.showLegend;
-    this.chart.chart.config.data.chartType = chart.type;
-    this.chart.chart.update();
+    this.lineChartData = dataSets;
+    this.lineChartColors = colors;
+    this.lineChartLabels = this.chart.labels;
+    this.lineChartOptions = this.chart.options;
+    this.lineChartLegend = this.chart.showLegend;
+    this.lineChartType = this.chart.type;
+
+    if (this.chartComponent.chart) {
+      this.chartComponent.chart.config.data.labels = this.chart.labels;
+      this.chartComponent.chart.update();
+    }
   }
 }

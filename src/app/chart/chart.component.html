@@ -1,4 +1,4 @@
-<div style="display: block; width: 100%;">
+<div style="display: block; width: 80%;">
   <canvas baseChart width="400px" height="400px"
           [datasets]="lineChartData"
           [labels]="lineChartLabels"
@@ -9,7 +9,4 @@
   </canvas>
 </div>
 
-<input type="text" [(ngModel)]="beginTime" title="Begin tijd"/>
-<input type="text" [(ngModel)]="endTime" title="Eind tijd"/>
-<input type="button" (click)="byHoursInterval()" value="Show">
 
