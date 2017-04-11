@@ -1,0 +1,14 @@
+.wrapper {
+  width: 100%;
+  display: table;
+}
+
+.chart {
+  display: table-cell;
+}
+
+.data {
+  display: table-cell;
+  width: 20%;
+  vertical-align: top;
+}

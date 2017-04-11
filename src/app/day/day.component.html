@@ -1,0 +1,16 @@
+<p>
+  Energie verbruik van de afgelopen 24 uur
+</p>
+
+<div class="wrapper">
+  
+  <div class="chart">
+    <app-chart [chart]="chart" *ngIf="chart"></app-chart>
+  </div>
+
+  <div class="data">
+    <span>Kosten</span>
+    <br/>
+    <span>{{costs}}</span>
+  </div>
+</div>
