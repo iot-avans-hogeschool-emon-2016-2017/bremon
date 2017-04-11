@@ -1,34 +1,41 @@
+
 <app-login [hidden]="authService.isAuthenticated()"></app-login>
 
-<md-sidenav-container [hidden]="!authService.isAuthenticated()">
-  <md-sidenav #sidenav [mode]="sidenavMode" class="app-sidenav" [opened]="sidenavOpened" >
-    <md-toolbar color="primary">
-      <span>Sidenav Title</span>
-    </md-toolbar>
-    <md-nav-list>
-      <md-list-item routerLink="/" (click)="onClick($event, sidenav)">
-        <md-icon>home</md-icon>
-        <span>Home</span>
-      </md-list-item>
-      <md-list-item routerLink="/test" (click)="onClick($event, sidenav)">
+<div class="app-container" [hidden]="!authService.isAuthenticated()">
+  <md-sidenav-container>
+    <md-sidenav #sidenav [mode]="sidenavMode" class="app-sidenav" [opened]="sidenavOpened">
+      <md-toolbar color="primary">
+        <span>Sidenav Title</span>
+      </md-toolbar>
+      <md-nav-list>
+        <md-list-item routerLink="/" (click)="onClick($event, sidenav)">
+          <md-icon>home</md-icon>
+          <span>Home</span>
+        </md-list-item>
+        <md-list-item routerLink="/day" (click)="onClick($event, sidenav)">
         <md-icon>show_chart</md-icon>
         <span>Chart</span>
       </md-list-item>
-    </md-nav-list>
+      <md-list-item routerLink="/current" (click)="onClick($event, sidenav)">
+        <md-icon>timer</md-icon>
+        <span>Current</span>
+      </md-list-item>
+      </md-nav-list>
 
-  </md-sidenav>
+    </md-sidenav>
 
-  <md-toolbar color="primary">
-    <button class="app-icon-button" (click)="onClick($event, sidenav)">
-      <i class="material-icons app-toolbar-menu">menu</i>
-    </button>
+    <md-toolbar color="primary">
+      <button class="app-icon-button" (click)="onClick($event, sidenav)">
+        <i class="material-icons app-toolbar-menu">menu</i>
+      </button>
 
-    {{title}}
+      {{title}}
 
-    <span class="app-toolbar-filler"></span>
-  </md-toolbar>
+      <span class="app-toolbar-filler"></span>
+    </md-toolbar>
 
-  <div class="app-content">
-    <router-outlet></router-outlet>
-  </div>
-</md-sidenav-container>
+    <div class="app-content">
+      <router-outlet></router-outlet>
+    </div>
+  </md-sidenav-container>
+</div>

@@ -3,6 +3,11 @@ app-login {
   width: 100%;
 }
 
+.app-container {
+  height: 100%;
+  width: 100%;
+}
+
 .app-content {
   padding: 20px;
 }

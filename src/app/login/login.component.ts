@@ -22,13 +22,10 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
-  onClick_login(username, password) {
-    console.log(username);
+  onClick_login(username, password) {    
     this.login_service.getToken(username.value, password.value).subscribe(data => {
-        console.log('login succeed');
-        this.authService.authenticate(JSON.stringify(data));
+        this.authService.authenticate(data.toString());
         this.router.navigateByUrl("/").then((data) => {
-          console.log('nav succeed');
         }).catch((ex) => {
             console.log(ex);
           }
