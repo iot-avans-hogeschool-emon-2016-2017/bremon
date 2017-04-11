@@ -5,6 +5,9 @@
   "angular-cli": {},
   "scripts": {
     "ng": "ng",
+    "build": "npm build:prod",
+    "build:prod": "ng build --prod",
+    "build:dev": "ng build --dev",
     "start": "npm run postinstall node server.js",
     "start:dev": "ng serve",
     "test": "ng test",
