@@ -5,6 +5,9 @@ import {AuthService} from "./auth.service";
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
+  host: {
+    '(window:resize)': 'onResize($event)'
+  }
 })
 export class AppComponent {
 
@@ -15,7 +18,7 @@ export class AppComponent {
   public sidenavMode = "over";
 
   constructor(public authService: AuthService) {
-    if (window.screen.width > 960) {
+    if (window.innerWidth > 960) {
       this.sidenavOpened = true;
       this.sidenavMode = "side";
     }
