@@ -11,10 +11,10 @@ export class AppComponent {
   isDarkTheme: boolean = false;
   title = 'app works!';
 
-  private sidenavOpened = false;
-  private sidenavMode = "over";
+  public sidenavOpened = false;
+  public sidenavMode = "over";
 
-  constructor(private authService: AuthService) {
+  constructor(public authService: AuthService) {
     if (window.screen.width > 960) {
       this.sidenavOpened = true;
       this.sidenavMode = "side";
