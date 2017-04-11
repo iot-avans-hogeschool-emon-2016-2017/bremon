@@ -13,13 +13,13 @@ export class LoginService {
   constructor(private http: Http) { }
 
   public getToken(username, password): Observable<Array<Object>> {
-    var headers = new Headers({ 'Content-Type': 'application/json' });
+    var headers = new Headers({ 'Content-Type': 'text/plain' });
     var options = new RequestOptions({ headers: headers });
 
-    const body = {
+    const body = JSON.stringify({
       'username': username,
       'password': password
-    }
+    });
 
     return this.http.post(this.url, body, options)
       .map(res => {
