@@ -12,7 +12,7 @@ import {AuthService} from "./auth.service";
 export class AppComponent {
 
   isDarkTheme: boolean = false;
-  title = 'app works!';
+  title = 'Bremon';
 
   public sidenavOpened = false;
   public sidenavMode = "over";
@@ -25,7 +25,6 @@ export class AppComponent {
   }
 
   onResize(event) {
-    console.log("Resize!" + event.target.innerWidth);
     if (event.target.innerWidth > 960) {
       this.sidenavOpened = true;
       this.sidenavMode = "side";

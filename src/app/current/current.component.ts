@@ -16,7 +16,7 @@ export class CurrentComponent implements OnInit {
 
   ngOnInit() {
     this.service.getLastMeasurement().subscribe(data => {
-      this.lastMeasurement = data[data.length -1];
+      this.lastMeasurement = data[data.length - 1];
       this.currentUsage();
     },
     err => {
