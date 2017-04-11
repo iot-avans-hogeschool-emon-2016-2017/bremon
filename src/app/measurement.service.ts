@@ -1,16 +1,22 @@
 import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs/Rx';
 import {Http} from '@angular/http';
+import {AuthService} from "./auth.service";
+import { environment } from '../environments/environment';
 
 @Injectable()
 export class MeasurementService {
 
-  private token: string =
-    'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOjIsImV4cCI6IjIwMTctMDQtMTVUMDc6NDU6MDMuOTM2WiJ9.J0I05BzFbn4jvAK1jIMCkkXFmju-Wm9-HfQBtp25rcI';
-  private url_byTime: string = 'http://localhost:5000/measurements/time/hour';
-  private url_last: string = 'http://localhost:5000/measurements/last';
+  private token: string = this.auth.getToken();
 
-  constructor(private http: Http) { }
+  private URI_bytime: string = '/measurements/time/hour';
+  private URI_last: string = '/measurements/last';
+  private URL: string = 'http://localhost:5000';
+
+  constructor(private http: Http, private auth: AuthService) {
+  if (environment.production)
+    this.URL = "https://emonapi.brdk.nl";
+  }
 
   public getMeasurements(begin: string, end: string): Observable<Array<Object>> {
     const body = JSON.stringify({
@@ -19,7 +25,7 @@ export class MeasurementService {
       'end':   end
     });
 
-    return this.http.post(this.url_byTime, body)
+    return this.http.post(this.URL + this.URI_bytime, body)
       .map(res => {
         return res.json().data || {};
       })
@@ -27,7 +33,7 @@ export class MeasurementService {
   }
 
   public getLastMeasurement(): Observable<Array<Object>> {
-    const url = this.url_last + '?token=' + this.token;
+    const url = this.URL + this.URI_last + '?token=' + this.token;
     return this.http.get(url)
       .map(res => {
         return res.json().data || {};

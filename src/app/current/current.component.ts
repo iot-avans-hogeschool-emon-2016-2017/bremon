@@ -10,7 +10,7 @@ import { MeasurementService } from '../measurement.service';
 export class CurrentComponent implements OnInit {
 
   private lastMeasurement: Object;
-  private usage: number;
+  public usage: number;
 
   constructor(private service: MeasurementService) { }
 

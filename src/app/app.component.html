@@ -1,6 +1,6 @@
 <app-login [hidden]="authService.isAuthenticated()"></app-login>
 
-<md-sidenav-container [hidden]="!authService.isAuthenticated()">
+<md-sidenav-container [hidden]="!(authService.isAuthenticated())">
   <md-sidenav #sidenav [mode]="sidenavMode" class="app-sidenav" [opened]="sidenavOpened" >
     <md-toolbar color="primary">
       <span>Sidenav Title</span>

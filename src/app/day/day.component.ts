@@ -21,8 +21,8 @@ export class DayComponent implements OnInit {
 
   protected beginTime;
   protected endTime;
-  protected chart: Chart;
-  protected costs: number;
+  public chart: Chart;
+  public costs: number;
 
   constructor(private measurement_service: MeasurementService) {  }
 

@@ -18,4 +18,8 @@ export class AuthService {
   authenticate(token: string) {
     this.authToken = token;
   }
+
+  getToken() {
+    return this.authToken;
+  }
 }
