@@ -10,13 +10,13 @@ import { MeasurementService } from '../measurement.service';
 export class CurrentComponent implements OnInit {
 
   private lastMeasurement: Object;
-  private usage: number;
+  public usage: number;
 
   constructor(private service: MeasurementService) { }
 
   ngOnInit() {
     this.service.getLastMeasurement().subscribe(data => {
-      this.lastMeasurement = data[data.length -1];      
+      this.lastMeasurement = data[data.length -1];
       this.currentUsage();
     },
     err => {
