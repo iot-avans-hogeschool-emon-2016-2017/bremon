@@ -10,12 +10,14 @@ import { ChartComponent } from './chart/chart.component';
 import { DayComponent } from './day/day.component';
 
 import { MeasurementService} from './measurement.service';
+import { CurrentComponent } from './current/current.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ChartComponent,
-    DayComponent
+    DayComponent,
+    CurrentComponent
   ],
   imports: [
     BrowserModule,
