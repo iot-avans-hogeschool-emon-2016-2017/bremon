@@ -6,11 +6,11 @@
       <span>Sidenav Title</span>
     </md-toolbar>
     <md-nav-list>
-      <md-list-item routerLink="/">
+      <md-list-item routerLink="/" (click)="onClick($event, sidenav)">
         <md-icon>home</md-icon>
         <span>Home</span>
       </md-list-item>
-      <md-list-item routerLink="/test">
+      <md-list-item routerLink="/test" (click)="onClick($event, sidenav)">
         <md-icon>show_chart</md-icon>
         <span>Chart</span>
       </md-list-item>
