@@ -33,13 +33,12 @@ import { AppRoutingModule } from "./app-routing.module";
     ChartComponent,
     DayComponent,
     CurrentComponent
-
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
-    ChartsModule
+    ChartsModule,
     MaterialModule,
     AppRoutingModule
   ],

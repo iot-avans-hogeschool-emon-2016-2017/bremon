@@ -24,8 +24,7 @@ export class AppComponent {
     }
   }
 
-  onResize(event) {
-    console.log("Resize!" + event.target.innerWidth);
+  onResize(event) {    
     if (event.target.innerWidth > 960) {
       this.sidenavOpened = true;
       this.sidenavMode = "side";
