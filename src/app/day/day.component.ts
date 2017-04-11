@@ -7,6 +7,7 @@ import { MeasurementService } from '../measurement.service';
 
 import Chart from '../chart/chart_data/chart';
 import Line from '../chart/chart_data/line';
+import {Red} from '../chart/chart_data/line-color';
 
 const momentFormatString = 'YYYY-MM-DD HH:mm:ss';
 
@@ -46,6 +47,7 @@ export class DayComponent implements OnInit {
         this.chart = this.buildChart(data);
         this.extraInfo.costs = this.calculateCosts(data);
         this.extraInfo.calcAvg(this.totalHours(data));
+        this.addAvgToChart(this.roundToTwoDecimal(this.extraInfo.getKWhInfo('avg')));
       },
       err => {
         console.error(err);
@@ -62,7 +64,7 @@ export class DayComponent implements OnInit {
     const newChart = new Chart();
     if (data.length <= 0) { return newChart; }
     const line = new Line();
-    line.dataSet.label = 'kWh';
+    line.dataSet.label = 'verbuik in kWh';
 
     this.hours(data,(hour, measurements) => {
       /*hourK === 0 means a new day, show date new day instead of 0*/
@@ -127,6 +129,18 @@ export class DayComponent implements OnInit {
     });
     console.log(counter);
     return counter;
+  }
+
+  private addAvgToChart(avg) {
+    const totalLabels = this.chart.labels.length;
+    const line = new Line();
+    line.color = Red;
+    line.dataSet.label = 'Gemiddeld verbruik';
+    for (let i = 0; i < totalLabels; i++) {
+      line.dataSet.data.push(avg);
+    }
+    console.log(line)
+    this.chart.lines.push(line);
   }
 
   private hours(data: Array<Object>, func): void {
