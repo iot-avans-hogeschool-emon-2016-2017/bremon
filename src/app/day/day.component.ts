@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import * as moment from 'moment';
 
+import { ExtraInfo } from './extra-info';
 import { MeasurementService } from '../measurement.service';
 
 import Chart from '../chart/chart_data/chart';
@@ -22,12 +23,18 @@ export class DayComponent implements OnInit {
   protected beginTime;
   protected endTime;
   public chart: Chart;
-  public costs: number;
+  public extraInfo: ExtraInfo;
 
-  constructor(private measurement_service: MeasurementService) {  }
+  constructor(private measurement_service: MeasurementService) {
+    this.extraInfo = new ExtraInfo();
+  }
 
   ngOnInit() {
     this.getLast24HoursChart();
+  }
+
+  roundToTwoDecimal(value): number {
+    return Math.round(value * 100) / 100;
   }
 
   getLast24HoursChart() {
@@ -37,7 +44,7 @@ export class DayComponent implements OnInit {
       this.endTime.format(momentFormatString)
     ).subscribe(data => {
         this.chart = this.buildChart(data);
-        this.costs = this.calculateCosts(data);
+        this.extraInfo.costs = this.calculateCosts(data);
       },
       err => {
         console.error(err);
@@ -47,7 +54,7 @@ export class DayComponent implements OnInit {
   setTimeLast24Hours(): void {
     this.endTime = moment();
     this.beginTime = moment()
-      .subtract(2, 'days');
+      .subtract(1, 'days');
   }
 
   buildChart(data: Array<Object>): Chart {
@@ -65,6 +72,7 @@ export class DayComponent implements OnInit {
       }
       const totalTicks = this.countTicks(measurements);
       const kWh = totalTicks / 10000;
+      this.extraInfo.setKWh(kWh);
       line.dataSet.data.push(kWh);
     });
 
@@ -72,16 +80,16 @@ export class DayComponent implements OnInit {
     return newChart;
   }
 
-  private calculateCosts(data:Array<Object>): number {
+  private calculateCosts(data: Array<Object>): number {
     let costs = 0;
     const tickPerTariff = {
       'off': {
         total: 0,
-        tarif: 0.1828
+        tariff: 0.1828
       },
       'normal': {
         total: 0,
-        tarif: 0.1718
+        tariff: 0.1718
       }
     };
     /*in Brabant, normalTariff is valid between: 7.00 hour - 21:00 hour*/
@@ -93,8 +101,8 @@ export class DayComponent implements OnInit {
     });
 
     Object.keys(tickPerTariff).forEach(key => {
-      const {total, tarif} = tickPerTariff[key];
-      costs += total/impPerKWh * tarif;
+      const {total, tariff} = tickPerTariff[key];
+      costs += total / impPerKWh * tariff;
     });
 
     return costs;
@@ -108,7 +116,7 @@ export class DayComponent implements OnInit {
     return total;
   }
 
-  private hours(data:Array<Object>, func): void {
+  private hours(data: Array<Object>, func): void {
     Object.keys(data).forEach(yearK => {
       const year = data[yearK];
 

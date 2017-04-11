@@ -1,14 +1,27 @@
 .wrapper {
-  width: 100%;
-  display: table;
-}
-
-.chart {
-  display: table-cell;
+  width: 80%;
+  text-align: center;
 }
 
 .data {
-  display: table-cell;
-  width: 20%;
   vertical-align: top;
+  text-align: center;
+}
+
+.label {
+  text-align: left;
+}
+
+.value {
+  text-align: right;
+}
+
+.unit {
+  font-weight: bold;
+  text-align: left;
+}
+
+.euro {
+  font-weight: bold;
+  text-align: right;
 }
