@@ -2,8 +2,15 @@
   Energie verbruik van de afgelopen 24 uur
 </p>
 
-<div style="width: 80%">
-  <app-chart [chart]="chart" *ngIf="chart"></app-chart>
-</div>
+<div class="wrapper">
+  
+  <div class="chart">
+    <app-chart [chart]="chart" *ngIf="chart"></app-chart>
+  </div>
 
-<span>Gemaakte kosten over de afgelopen dag {{costs}}</span>
+  <div class="data">
+    <span>Kosten</span>
+    <br/>
+    <span>{{costs}}</span>
+  </div>
+</div>
