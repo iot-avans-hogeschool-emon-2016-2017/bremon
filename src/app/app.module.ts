@@ -8,7 +8,7 @@ import 'hammerjs';
 import {MaterialModule} from '@angular/material';
 
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 import { LoginComponent } from './login/login.component';
 import {TestComponent} from './test/test.component';
 
@@ -19,7 +19,7 @@ import {AppRoutingModule} from "./app-routing.module";
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
+    DashboardComponent,
     LoginComponent,
     TestComponent
   ],

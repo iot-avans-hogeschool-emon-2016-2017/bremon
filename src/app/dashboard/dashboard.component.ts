@@ -5,11 +5,11 @@ import { Component, OnInit} from '@angular/core';
 @Component({
   selector: 'app-home',
   template: `
-<h1>Home</h1>
+<h1>Dashboard</h1>
 <span>It works!</span>
 `
 })
-export class HomeComponent implements OnInit {
+export class DashboardComponent implements OnInit {
 
   constructor() { }
 
