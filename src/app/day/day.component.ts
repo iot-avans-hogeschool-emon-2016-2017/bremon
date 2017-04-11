@@ -14,6 +14,7 @@ const momentFormatString = 'YYYY-MM-DD HH:mm:ss';
   templateUrl: './day.component.html',
   styleUrls: ['./day.component.css']
 })
+
 export class DayComponent implements OnInit {
 
   protected beginTime;
