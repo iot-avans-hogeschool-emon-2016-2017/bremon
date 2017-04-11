@@ -27,7 +27,13 @@ export class LoginComponent implements OnInit {
     this.login_service.getToken(username.value, password.value).subscribe(data => {
         console.log('login succeed');
         this.authService.authenticate(JSON.stringify(data));
-        this.router.navigate(['/']);
+        console.log("haai!");
+        this.router.navigateByUrl("/test").then((data) => {
+          console.log('data: ' + data);
+        }).catch((ex) => {
+            console.log(ex);
+          }
+        );
       },
       err => {
         console.log(err);

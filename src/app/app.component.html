@@ -1,16 +1,16 @@
-<app-login *ngIf="!authService.isAuthenticated()"></app-login>
+<app-login [hidden]="authService.isAuthenticated()"></app-login>
 
-<md-sidenav-container *ngIf="authService.isAuthenticated()">
+<md-sidenav-container [hidden]="!authService.isAuthenticated()">
   <md-sidenav #sidenav [mode]="sidenavMode" class="app-sidenav" [opened]="sidenavOpened" >
     <md-toolbar color="primary">
       <span>Sidenav Title</span>
     </md-toolbar>
     <md-nav-list>
-      <md-list-item>
+      <md-list-item routerLink="/">
         <md-icon>home</md-icon>
         <span>Home</span>
       </md-list-item>
-      <md-list-item>
+      <md-list-item routerLink="/test">
         <md-icon>show_chart</md-icon>
         <span>Chart</span>
       </md-list-item>

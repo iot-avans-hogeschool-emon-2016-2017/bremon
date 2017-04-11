@@ -10,26 +10,30 @@ import {MaterialModule} from '@angular/material';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
-
-import {routing, routingProviders} from "./app.routing";
+import {TestComponent} from './test/test.component';
 
 import {AuthService} from "./auth.service"
 import {LoginService} from "./login/login.service";
+import {AppRoutingModule} from "./app-routing.module";
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    LoginComponent
+    LoginComponent,
+    TestComponent
   ],
   imports: [
-    routing,
     BrowserModule,
     FormsModule,
     HttpModule,
-    MaterialModule
+    MaterialModule,
+    AppRoutingModule
   ],
-  providers: [routingProviders, AuthService, LoginService],
+  providers: [
+    AuthService,
+    LoginService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
