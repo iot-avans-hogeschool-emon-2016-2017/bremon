@@ -9,6 +9,8 @@ import Line from '../chart/chart_data/line';
 
 const momentFormatString = 'YYYY-MM-DD HH:mm:ss';
 
+const impPerKWh = 10000;
+
 @Component({
   selector: 'app-day',
   templateUrl: './day.component.html',
@@ -20,6 +22,7 @@ export class DayComponent implements OnInit {
   protected beginTime;
   protected endTime;
   protected chart: Chart;
+  protected costs: number;
 
   constructor(private measurement_service: MeasurementService) {  }
 
@@ -34,6 +37,7 @@ export class DayComponent implements OnInit {
       this.endTime.format(momentFormatString)
     ).subscribe(data => {
         this.chart = this.buildChart(data);
+        this.costs = this.calculateCosts(data);
       },
       err => {
         console.error(err);
@@ -52,6 +56,59 @@ export class DayComponent implements OnInit {
     const line = new Line();
     line.dataSet.label = 'kWh';
 
+    this.hours(data,(hour, measurements) => {
+      /*hourK === 0 means a new day, show date new day instead of 0*/
+      if (hour !== '0') {
+        newChart.labels.push(hour);
+      } else {
+        newChart.labels.push(moment(measurements[hour]['timestamp']).format('YYYY-MM-DD'));
+      }
+      const totalTicks = this.countTicks(measurements);
+      const kWh = totalTicks / 10000;
+      line.dataSet.data.push(kWh);
+    });
+
+    newChart.lines.push(line);
+    return newChart;
+  }
+
+  private calculateCosts(data:Array<Object>): number {
+    let costs = 0;
+    const tickPerTariff = {
+      'off': {
+        total: 0,
+        tarif: 0.1828
+      },
+      'normal': {
+        total: 0,
+        tarif: 0.1718
+      }
+    };
+    /*in Brabant, normalTariff is valid between: 7.00 hour - 21:00 hour*/
+    this.hours(data,(hour, measurements) => {
+        if (hour < 7 && hour <= 21)
+          tickPerTariff.normal.total += this.countTicks(measurements);
+        else
+          tickPerTariff.off.total  += this.countTicks(measurements);
+    });
+
+    Object.keys(tickPerTariff).forEach(key => {
+      const {total, tarif} = tickPerTariff[key];
+      costs += total/impPerKWh * tarif;
+    });
+
+    return costs;
+  }
+
+  private countTicks(measurements): number {
+    let total = 0;
+    Object.keys(measurements).forEach(key => {
+      total += measurements[key].value;
+    });
+    return total;
+  }
+
+  private hours(data:Array<Object>, func): void {
     Object.keys(data).forEach(yearK => {
       const year = data[yearK];
 
@@ -62,30 +119,13 @@ export class DayComponent implements OnInit {
           const day = month[dayK];
 
           Object.keys(day).forEach(hourK => {
-            const measurements = day[hourK];
-            /*hourK === 0 means a new day, show date new day instead of zero*/
-            if (hourK !== '0') {
-              newChart.labels.push(hourK);
-            } else {
-              newChart.labels.push(moment(measurements[hourK]['timestamp']).format('YYYY-MM-DD'));
+            if (func) {
+              func(hourK, day[hourK]);
             }
-            const totalTicks = this.countTicks(measurements);
-            const kWh = totalTicks / 10000;
-            line.dataSet.data.push(kWh);
           });
         });
       });
     });
-    newChart.lines.push(line);
-    return newChart;
-  }
-
-  private countTicks(measurements): number {
-    let total = 0;
-    Object.keys(measurements).forEach(key => {
-      total += measurements[key].value;
-    });
-    return total;
   }
 
 }
