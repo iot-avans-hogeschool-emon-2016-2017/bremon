@@ -10,7 +10,7 @@ export class AuthService {
 
   isAuthenticated() {
     if (this.authToken === '') {
-      return true;
+      return false;
     }
     return true;
   }
