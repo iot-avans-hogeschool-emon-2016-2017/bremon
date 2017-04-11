@@ -2,16 +2,26 @@
   Energie verbruik van de afgelopen 24 uur
 </p>
 
-<table class="data" summary="Extra informatie over afgelopen 24 uur">
+<table class="table" summary="Extra informatie over afgelopen 24 uur">
   <tbody>
     <tr>
       <td class="label">Hoogste verbruik:</td>
-      <td class="value">{{roundToTwoDecimal(extraInfo.getHighest())}}</td>
+      <td class="value">{{roundToTwoDecimal(extraInfo.getKWhInfo('highest'))}}</td>
       <td class="unit">kWh</td>
     </tr>
     <tr>
       <td class="label">Laagste verbruik:</td>
-      <td class="value">{{roundToTwoDecimal(extraInfo.getLowest())}}</td>
+      <td class="value">{{roundToTwoDecimal(extraInfo.getKWhInfo('lowest'))}}</td>
+      <td class="unit">kWh</td>
+    </tr>
+    <tr>
+      <td class="label">Totale verbruik:</td>
+      <td class="value">{{roundToTwoDecimal(extraInfo.getKWhInfo('total'))}}</td>
+      <td class="unit">kWh</td>
+    </tr>
+    <tr>
+      <td class="label">Gemiddele verbruik:</td>
+      <td class="value">{{roundToTwoDecimal(extraInfo.getKWhInfo('avg'))}}</td>
       <td class="unit">kWh</td>
     </tr>
     <tr>

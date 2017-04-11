@@ -45,6 +45,7 @@ export class DayComponent implements OnInit {
     ).subscribe(data => {
         this.chart = this.buildChart(data);
         this.extraInfo.costs = this.calculateCosts(data);
+        this.extraInfo.calcAvg(this.totalHours(data));
       },
       err => {
         console.error(err);
@@ -82,6 +83,7 @@ export class DayComponent implements OnInit {
 
   private calculateCosts(data: Array<Object>): number {
     let costs = 0;
+    let totalKWh = 0;
     const tickPerTariff = {
       'off': {
         total: 0,
@@ -102,9 +104,11 @@ export class DayComponent implements OnInit {
 
     Object.keys(tickPerTariff).forEach(key => {
       const {total, tariff} = tickPerTariff[key];
-      costs += total / impPerKWh * tariff;
+      const totalKWhPerTariff = total / impPerKWh;
+      totalKWh += totalKWhPerTariff;
+      costs += totalKWhPerTariff * tariff;
     });
-
+    this.extraInfo.kWh['total'] = totalKWh;
     return costs;
   }
 
@@ -114,6 +118,15 @@ export class DayComponent implements OnInit {
       total += measurements[key].value;
     });
     return total;
+  }
+
+  private totalHours(data: Array<Object>): number {
+    let counter = 0;
+    this.hours(data, (hour, measurements) => {
+      counter++;
+    });
+    console.log(counter);
+    return counter;
   }
 
   private hours(data: Array<Object>, func): void {

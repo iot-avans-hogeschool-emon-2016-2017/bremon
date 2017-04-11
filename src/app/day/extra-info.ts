@@ -6,7 +6,9 @@ export class ExtraInfo {
     this.costs = -1;
     this.kWh = {
       highest: -1,
-      lowest: -1
+      lowest: -1,
+      total: -1,
+      avg: -1
     };
   }
 
@@ -20,11 +22,11 @@ export class ExtraInfo {
     }
   }
 
-  public getHighest(): void {
-    return this.kWh['highest'];
+  public getKWhInfo(key): number {
+    return this.kWh[key];
   }
 
-  public getLowest(): void {
-    return this.kWh['lowest'];
+  public calcAvg(totalHours): void {
+    this.kWh['avg'] = this.kWh['total'] / totalHours;
   }
 }

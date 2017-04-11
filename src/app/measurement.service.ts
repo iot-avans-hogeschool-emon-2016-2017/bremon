@@ -12,10 +12,11 @@ export class MeasurementService {
   private URI_bytime: string = '/measurements/time/hour';
   private URI_last: string = '/measurements/last';
   private URL: string = 'http://localhost:5000';
+  //private URL: string = 'https://emonapi.brdk.nl';
 
   constructor(private http: Http, private auth: AuthService) {
   if (environment.production)
-    this.URL = "https://emonapi.brdk.nl";
+    this.URL = 'https://emonapi.brdk.nl';
   }
 
   public getMeasurements(begin: string, end: string): Observable<Array<Object>> {

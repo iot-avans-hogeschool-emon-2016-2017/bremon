@@ -1,11 +1,13 @@
 .wrapper {
-  width: 80%;
+  width: 90%;
   text-align: center;
 }
 
-.data {
+.table {
   vertical-align: top;
   text-align: center;
+  background-color: #c3ccdb;
+  font-size: 1.2em;
 }
 
 .label {
