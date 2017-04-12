@@ -1,7 +1,7 @@
 /**
  * Created by Bart on 10-4-2017.
  */
-import {Injectable} from "@angular/core";
+import {Injectable} from '@angular/core';
 
 
 @Injectable()

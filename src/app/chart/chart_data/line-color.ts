@@ -24,10 +24,10 @@ export const Grey: LineColor = {
 };
 
 export const Red: LineColor = {
-  backgroundColor: '#ff0b26',
-  borderColor: '#ff0b26',
-  pointBackgroundColor: '#ff0b26',
-  pointBorderColor: '#ff0b26',
-  pointHoverBackgroundColor: '#ff0b26',
-  pointHoverBorderColor: '#ff0b26',
+  backgroundColor: 'rgba(67, 255, 0,0.2)',
+  borderColor: 'rgba(67, 255, 0,1)',
+  pointBackgroundColor: 'rgba(67, 255, 0,0.2)',
+  pointBorderColor: 'rgba(67, 255, 0,0.5)',
+  pointHoverBackgroundColor: 'rgba(67, 255, 0,0.2)',
+  pointHoverBorderColor: 'rgba(67, 255, 0,0.2)',
 };

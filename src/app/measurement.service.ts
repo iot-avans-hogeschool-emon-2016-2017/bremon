@@ -11,11 +11,13 @@ export class MeasurementService {
 
   private URI_bytime: string = '/measurements/time/hour';
   private URI_last: string = '/measurements/last';
-  private URL: string = 'http://localhost:5000';
+  private URI_trend: string = '/measurements/trend';
+  // private URL: string = 'http://localhost:5000';
+  private URL: string = 'https://emonapi.brdk.nl';
 
   constructor(private http: Http, private auth: AuthService) {
   if (environment.production)
-    this.URL = "https://emonapi.brdk.nl";
+    this.URL = 'https://emonapi.brdk.nl';
   }
 
   public getMeasurements(begin: string, end: string): Observable<Array<Object>> {
@@ -26,6 +28,18 @@ export class MeasurementService {
     });
 
     return this.http.post(this.URL + this.URI_bytime, body)
+      .map(res => {
+        return res.json().data || {};
+      })
+      .catch(this.handleError);
+  }
+
+  public getTrend(): Observable<Array<number>> {
+    const body = JSON.stringify({
+      'token': this.token
+    });
+
+    return this.http.post(this.URL + this.URI_trend, body)
       .map(res => {
         return res.json().data || {};
       })
