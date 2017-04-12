@@ -23,6 +23,7 @@ export class LoginService {
 
     return this.http.post(this.url, body, options)
       .map(res => {
+        console.log(res.json().token)
         return res.json().token || {};
       })
       .catch(this.handleError);

@@ -5,7 +5,7 @@ import { Component, OnInit} from '@angular/core';
 @Component({
   selector: 'app-test',
   template: `
-    <h1>Test</h1>
+    <h1>Home</h1>
     <span>It works!</span>
   `
 })

@@ -22,7 +22,7 @@ export class MeasurementService {
 
   public getMeasurements(begin: string, end: string): Observable<Array<Object>> {
     const body = JSON.stringify({
-      'token': this.token,
+      'token': this.auth.getToken(),
       'begin': begin,
       'end':   end
     });
@@ -36,7 +36,7 @@ export class MeasurementService {
 
   public getTrend(): Observable<Array<number>> {
     const body = JSON.stringify({
-      'token': this.token
+      'token': this.auth.getToken()
     });
 
     return this.http.post(this.URL + this.URI_trend, body)
@@ -47,7 +47,7 @@ export class MeasurementService {
   }
 
   public getLastMeasurement(): Observable<Array<Object>> {
-    const url = this.URL + this.URI_last + '?token=' + this.token;
+    const url = this.URL + this.URI_last + '?token=' + this.auth.getToken();
     return this.http.get(url)
       .map(res => {
         return res.json().data || {};
