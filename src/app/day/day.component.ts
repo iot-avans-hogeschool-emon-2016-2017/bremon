@@ -59,9 +59,10 @@ export class DayComponent implements OnInit {
   }
 
   setTimeLast24Hours(): void {
-    this.endTime = moment();
+    this.endTime = moment()
+      .subtract(1, 'hours');
     this.beginTime = moment()
-      .subtract(1, 'days');
+      .subtract(1, 'days');      
   }
 
   buildChart(data: Array<Object>): Chart {
