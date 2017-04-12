@@ -12,8 +12,11 @@ export class CurrentComponent implements OnInit {
 
   private lastMeasurement: Object;
   public usage: number;
+  private oldUsage: number;
 
   constructor(private service: MeasurementService) {
+    this.oldUsage = -1;
+    this.usage = -1;
     Observable.interval(60000)
     .subscribe(() => {
       this.getLastMeasurement();
@@ -37,6 +40,18 @@ export class CurrentComponent implements OnInit {
   public beautifyUsage(): number {
     return Math.round(this.usage * 100) / 100;
   }
+
+  public isGoingUp(): boolean {
+    return this.usage > this.oldUsage;
+  }
+
+  public isGoingDown(): boolean {
+    return this.usage < this.oldUsage;
+  }
+
+  public isSame(): boolean {
+    return this.usage === this.oldUsage;
+  }
 /*
   meterkast: 10000 imp./kWh
   E = P * t
@@ -51,6 +66,9 @@ export class CurrentComponent implements OnInit {
   P = E / t * 1000 voor momenteel verbruik
 */
   public currentUsage(): void {
-    this.usage = (this.lastMeasurement['value']/10000) / (1/60) * 1000;
+    this.oldUsage = this.usage;
+    this.usage = (this.lastMeasurement['value'] / 10000) / (1 / 60) * 1000;
+
+    if (this.oldUsage < 0) { this.oldUsage = this.usage; }
   }
 }

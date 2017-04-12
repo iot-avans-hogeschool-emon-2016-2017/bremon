@@ -1,5 +1,12 @@
-<p>
+<h2>
   Momenteel verbruik
-</p>
+</h2>
 
-<span>{{beautifyUsage()}} Watts</span>
+<div>
+  <div *ngIf="isGoingUp()"><md-icon>trending_up</md-icon></div>
+  <div *ngIf="isGoingDown()"><md-icon>trending_down</md-icon></div>
+  <div *ngIf="isSame()"><md-icon>trending_flat</md-icon></div>
+</div>
+
+<span class="usage"
+>{{beautifyUsage()}} Watts</span>
