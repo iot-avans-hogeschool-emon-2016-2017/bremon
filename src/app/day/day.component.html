@@ -1,16 +1,39 @@
-<p>
+<h2>
   Energie verbruik van de afgelopen 24 uur
-</p>
+</h2>
+
+<table class="table" summary="Extra informatie over afgelopen 24 uur">
+  <tbody>
+    <tr>
+      <td class="label">Hoogste verbruik:</td>
+      <td class="value">{{roundToTwoDecimal(extraInfo.getKWhInfo('highest'))}}</td>
+      <td class="unit">kWh</td>
+    </tr>
+    <tr>
+      <td class="label">Laagste verbruik:</td>
+      <td class="value">{{roundToTwoDecimal(extraInfo.getKWhInfo('lowest'))}}</td>
+      <td class="unit">kWh</td>
+    </tr>
+    <tr>
+      <td class="label">Totale verbruik:</td>
+      <td class="value">{{roundToTwoDecimal(extraInfo.getKWhInfo('total'))}}</td>
+      <td class="unit">kWh</td>
+    </tr>
+    <tr>
+      <td class="label">Gemiddele verbruik:</td>
+      <td class="value">{{roundToTwoDecimal(extraInfo.getKWhInfo('avg'))}}</td>
+      <td class="unit">kWh</td>
+    </tr>
+    <tr>
+      <td class="label">Kosten:</td>
+      <td class="value">
+        <span class="euro">&euro;</span>
+        {{roundToTwoDecimal(extraInfo.costs)}}
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 <div class="wrapper">
-  
-  <div class="chart">
-    <app-chart [chart]="chart" *ngIf="chart"></app-chart>
-  </div>
-
-  <div class="data">
-    <span>Kosten</span>
-    <br/>
-    <span>{{costs}}</span>
-  </div>
+  <app-chart [chart]="chart" *ngIf="chart"></app-chart>
 </div>
