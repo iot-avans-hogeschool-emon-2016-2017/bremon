@@ -61,6 +61,7 @@ export class HourComponent implements OnInit {
 
   buildChart(data: Array<Object>): Chart {
     const newChart = new Chart();
+    newChart.type = 'bar';
     if (data.length <= 0) { return newChart; }
     const line = new Line();
     line.dataSet.label = 'verbuik in Watt';
@@ -70,7 +71,7 @@ export class HourComponent implements OnInit {
       measurements.forEach(measurement => {
         const {timestamp, value} = measurement;
         const time = moment(timestamp);
-        const kWh = value / impPerKWh * 1000;
+        const kWh = value / impPerKWh / (1 / 60) * 1000;
 
         if (time.minute() % 3 === 0 )
         {
