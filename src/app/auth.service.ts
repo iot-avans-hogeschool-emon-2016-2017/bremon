@@ -6,7 +6,7 @@ import {Injectable} from '@angular/core';
 
 @Injectable()
 export class AuthService {
-  private authToken: string = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOjIsImV4cCI6IjIwMTctMDQtMjFUMTk6NDI6NDEuMTI4WiJ9.WQMGItQZOBVLC8SWk3yYopI7OhkH4z4GLQCS9yEUUdc';
+  private authToken: string = '';
 
   isAuthenticated() {
     if (this.authToken === '') {
