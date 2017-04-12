@@ -1,4 +1,5 @@
- import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import {Observable} from 'rxjs/Rx';
 
 import { MeasurementService } from '../measurement.service';
 
@@ -12,9 +13,18 @@ export class CurrentComponent implements OnInit {
   private lastMeasurement: Object;
   public usage: number;
 
-  constructor(private service: MeasurementService) { }
+  constructor(private service: MeasurementService) {
+    Observable.interval(60000)
+    .subscribe(() => {
+      this.getLastMeasurement();
+    });
+  }
 
   ngOnInit() {
+    this.getLastMeasurement();
+  }
+
+  private getLastMeasurement() {
     this.service.getLastMeasurement().subscribe(data => {
       this.lastMeasurement = data[data.length - 1];
       this.currentUsage();
@@ -24,6 +34,9 @@ export class CurrentComponent implements OnInit {
     });
   }
 
+  public beautifyUsage(): number {
+    return Math.round(this.usage * 100) / 100;
+  }
 /*
   meterkast: 10000 imp./kWh
   E = P * t
@@ -37,7 +50,7 @@ export class CurrentComponent implements OnInit {
 
   P = E / t * 1000 voor momenteel verbruik
 */
-  protected currentUsage(): void {
+  public currentUsage(): void {
     this.usage = (this.lastMeasurement['value']/10000) / (1/60) * 1000;
   }
 }

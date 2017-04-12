@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {Observable} from 'rxjs/Rx';
 
 import * as moment from 'moment';
 
@@ -7,7 +8,6 @@ import { MeasurementService } from '../measurement.service';
 
 import Chart from '../chart/chart_data/chart';
 import Line from '../chart/chart_data/line';
-import {Red} from '../chart/chart_data/line-color';
 
 const momentFormatString = 'YYYY-MM-DD HH:mm:ss';
 
@@ -28,6 +28,10 @@ export class DayComponent implements OnInit {
 
   constructor(private measurement_service: MeasurementService) {
     this.extraInfo = new ExtraInfo();
+    Observable.interval(60000)
+    .subscribe(() => {
+      this.getLast24HoursChart();
+    });
   }
 
   ngOnInit() {
@@ -127,19 +131,17 @@ export class DayComponent implements OnInit {
     this.hours(data, (hour, measurements) => {
       counter++;
     });
-    console.log(counter);
     return counter;
   }
 
   private addAvgToChart(avg) {
     const totalLabels = this.chart.labels.length;
     const line = new Line();
-    line.color = Red;
+
     line.dataSet.label = 'Gemiddeld verbruik';
     for (let i = 0; i < totalLabels; i++) {
       line.dataSet.data.push(avg);
     }
-    console.log(line)
     this.chart.lines.push(line);
   }
 
