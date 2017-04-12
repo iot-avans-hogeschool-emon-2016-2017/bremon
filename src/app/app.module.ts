@@ -16,6 +16,7 @@ import { TestComponent } from './test/test.component';
 import { ChartComponent } from './chart/chart.component';
 import { DayComponent } from './day/day.component';
 import { CurrentComponent } from './current/current.component';
+import {TrendComponent} from "./trend/trend.component";
 
 import { AuthService } from "./auth.service"
 import { LoginService } from "./login/login.service";
@@ -32,7 +33,8 @@ import { AppRoutingModule } from "./app-routing.module";
     TestComponent,
     ChartComponent,
     DayComponent,
-    CurrentComponent
+    CurrentComponent,
+    TrendComponent
   ],
   imports: [
     BrowserModule,
