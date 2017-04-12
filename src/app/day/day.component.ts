@@ -62,7 +62,7 @@ export class DayComponent implements OnInit {
     this.endTime = moment()
       .subtract(1, 'hours');
     this.beginTime = moment()
-      .subtract(1, 'days');      
+      .subtract(1, 'days');
   }
 
   buildChart(data: Array<Object>): Chart {
@@ -79,7 +79,7 @@ export class DayComponent implements OnInit {
         newChart.labels.push(moment(measurements[hour]['timestamp']).format('YYYY-MM-DD'));
       }
       const totalTicks = this.countTicks(measurements);
-      const kWh = totalTicks / 10000;
+      const kWh = totalTicks / impPerKWh;
       this.extraInfo.setKWh(kWh);
       line.dataSet.data.push(kWh);
     });

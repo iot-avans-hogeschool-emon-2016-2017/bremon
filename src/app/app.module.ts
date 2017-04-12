@@ -22,6 +22,7 @@ import { LoginService } from "./login/login.service";
 import { MeasurementService } from './measurement.service';
 
 import { AppRoutingModule } from "./app-routing.module";
+import { HourComponent } from './hour/hour.component';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { AppRoutingModule } from "./app-routing.module";
     TestComponent,
     ChartComponent,
     DayComponent,
-    CurrentComponent
+    CurrentComponent,
+    HourComponent
   ],
   imports: [
     BrowserModule,
